@@ -1,5 +1,6 @@
 import 'package:bloc_json/bloc/bloc.dart';
 import 'package:bloc_json/models/api_model.dart';
+import 'package:bloc_json/pages/AboutPage.dart';
 import 'package:bloc_json/pages/ArticleDetailsPage.dart';
 import 'package:bloc_json/services/repository.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   ArticleBloc articleBloc;
-
+  
   @override
   void initState() {
     super.initState();
@@ -44,6 +45,7 @@ class _HomePageState extends State<HomePage> {
                     icon: Icon(Icons.info),
                     onPressed: () {
                       debugPrint("Info");
+                      navigateToAboutPage(context);
                     },
                   ),
                 ],
@@ -121,8 +123,24 @@ class _HomePageState extends State<HomePage> {
                 title: Text(articles[index].title),
                 subtitle: Text(articles[index].publishedAt),
               ),
+              onTap: () {
+                navigateToArticleDetailPage(context, articles[index]);
+                debugPrint("Hello");
+              },
             ),
           );
         });
+  }
+
+  void navigateToArticleDetailPage(BuildContext context, Articles article) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return ArticleDetailPage(article: article);
+    }));
+  }
+
+  void navigateToAboutPage(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return AboutPage();
+    }));
   }
 } // class ends here
